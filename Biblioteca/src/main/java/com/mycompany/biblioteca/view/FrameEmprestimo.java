@@ -3,28 +3,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.biblioteca.view;
-import com.mycompany.biblioteca.controller.Controller;
-import com.mycompany.biblioteca.model.Cliente;
 
+import com.mycompany.biblioteca.controller.ClienteController;
+import com.mycompany.biblioteca.model.Cliente;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author erixk
  */
 public class FrameEmprestimo extends javax.swing.JFrame {
-
+    private ClienteController clienteController;
+    
     /**
      * Creates new form FrameEmprestimo
      */
     public FrameEmprestimo() {
         initComponents();
-        preencherComboBoxClientes();
-    }
+        clienteController = new ClienteController();
     
-    private void preencherComboBoxClientes() {
-        fkCliente.removeAllItems(); // Limpa a combobox
-        for (Cliente cliente : Controller.getListaCliente()) {
-            fkCliente.addItem(cliente.getNome()); // Adiciona o nome do cliente à combobox
+        // Inicialize a lista de livros com um modelo padrão
+        DefaultListModel<String> listaLivrosModel = new DefaultListModel<>();
+        jListaLivro.setModel(listaLivrosModel);
+    
+        // Inicialize a ComboBox com os clientes cadastrados
+        atualizarComboBoxClientes();
+}
+    
+    public void adicionarLivroNaLista(String titulo, String autor, String editora, int anoPublicacao, int exemplaresDisponiveis) {
+    String livroInfo = "Título: " + titulo + ", Autor: " + autor + ", Editora: " + editora + ", Ano: " + anoPublicacao + ", Exemplares: " + exemplaresDisponiveis;
+    ((DefaultListModel<String>)jListaLivro.getModel()).addElement(livroInfo);
+}
+    
+    private void atualizarComboBoxClientes() {
+        jComboBoxCliente.removeAllItems();
+        for (Cliente cliente : clienteController.getListaCliente()) {
+            jComboBoxCliente.addItem(cliente.getNomeCompleto());
         }
     }
 
@@ -37,53 +52,67 @@ public class FrameEmprestimo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        fkCliente = new javax.swing.JComboBox<>();
+        jComboBoxCliente = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListaLivro = new javax.swing.JList<>();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        fkCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        fkCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fkClienteActionPerformed(evt);
-            }
-        });
+        jComboBoxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jLabel1.setText("Clientes");
+
+        jListaLivro.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(jListaLivro);
+
+        jLabel2.setText("Livros");
+
+        jButton1.setText("Registrar Emprestimo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(fkCliente, 0, 445, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 241, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxCliente, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(fkCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(91, 91, 91)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void fkClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fkClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fkClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -92,7 +121,7 @@ public class FrameEmprestimo extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://dowfkClientele.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -121,8 +150,12 @@ public class FrameEmprestimo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> fkCliente;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBoxCliente;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JList<String> jListaLivro;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
 }
