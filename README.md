@@ -8,16 +8,14 @@ https://files.fm/f/cesw4m9mbg
 <br>
 
 <details>
-  <summary>Como Executar o Projeto em Arquivo Jar</summary>
-
-
+  <summary>Como Executar o Projeto em Arquivo .Jar</summary>
 
 ## Requisitos
 - Java 17 ou superior
 - Maven 3.6.0 ou superior
 
 ## Configuração do Ambiente
-1. Instale o Java 17: [Download Java 17](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+1. Instale o Java : [Download Java](https://www.oracle.com/java/technologies/downloads/)
 2. Instale o Maven: [Download Maven](https://maven.apache.org/download.cgi)
 
 ## Compilação e Empacotamento
